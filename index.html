@@ -28,7 +28,40 @@
 	        e.preventDefault();
 	    });
 
+	    function culqi() {
+			if (Culqi.token) {
+			  // Imprimir Token
+			  console.log(Culqi.token.id);
+			}
 
+			if(Culqi.error){
+			   // Mostramos JSON de objeto error en consola
+			   console.log(Culqi.error);
+
+			   alert(Culqi.error.mensaje);
+			}
+			else{
+			  $.post(
+
+			    "./develop/examples/02-create-charge.php", 
+			    // Ruta hacia donde enviaremos el token vía POST
+			    {
+			      token: Culqi.token.id,
+			      email: Culqi.token.email
+			    },
+			    function(data, status){
+			      console.log(status);
+			      var dataParse = JSON.parse(data);
+			      console.log(dataParse);
+			      if (data == 'ok') {
+			          console.log('El Token se creo con exito');
+			      } else {
+			          console.log('Ocurrio un error');
+			      }
+			    }
+			  );
+			}
+		};
 	</script>
 	<script type="text/javascript" src="js/app.js"></script>
 </html>
